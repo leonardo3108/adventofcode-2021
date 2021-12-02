@@ -3,3 +3,5 @@ Advent of Code is an Advent calendar of small programming puzzles for a variety 
 https://adventofcode.com/2021/about
 
 I'll place here my personal solutions to the puzzles.
+
+Last year: https://github.com/leonardo3108/adventofcode-2020 (in Python)
