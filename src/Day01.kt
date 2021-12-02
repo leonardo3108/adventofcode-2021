@@ -6,7 +6,7 @@ fun main() {
     var last = 99999
     var penultimate = 99999
     var oldSigma = 99999
-    File("resource/day01.txt").forEachLine {
+    File("resource/input01.txt").forEachLine {
         val newValue = it.toInt()
         val sigma = newValue + last + penultimate
         if (newValue > last)
