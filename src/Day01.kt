@@ -1,7 +1,6 @@
 import java.io.File
 
 fun main() {
-    var oldValue = 99999
     var countOne = 0
     var countThree = 0
     var last = 99999
@@ -10,11 +9,10 @@ fun main() {
     File("resource/day01.txt").forEachLine {
         val newValue = it.toInt()
         val sigma = newValue + last + penultimate
-        if (newValue > oldValue)
+        if (newValue > last)
             countOne ++
         if ((sigma < 99999) && (sigma > oldSigma))
             countThree ++
-        oldValue = newValue
         oldSigma = sigma
         penultimate = last
         last = newValue
