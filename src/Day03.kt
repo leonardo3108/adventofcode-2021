@@ -1,9 +1,9 @@
 import java.io.File
 
 fun main() {
-    val size: Int = 12
-    var diffs = IntArray(size)
-    var values: MutableList<CharArray> = arrayListOf()
+    val size = 12
+    val diffs = IntArray(size)
+    val values: MutableList<CharArray> = arrayListOf()
     File("resource/input03.txt").forEachLine {
         val newValue = it.toCharArray()
         values.add(newValue)
@@ -32,11 +32,8 @@ fun main() {
     print('=')
     println(gamma * epsilon)
 
-    for (pos in 1..size-1 )
-        diffs[pos] = 0
-    var pos = 0
-    val oxygen = determineRating(values, diffs, pos, size)
-    val co2 = determineRating(values, diffs, pos, size, false)
+    val oxygen = decode(determineRating(values, true))
+    val co2 = decode(determineRating(values, false))
     print("Part Two: ")
     print(oxygen)
     print('x')
@@ -45,38 +42,72 @@ fun main() {
     println(oxygen * co2)
 }
 
-private fun determineRating(
-    values: MutableList<CharArray>,
-    diffs: IntArray,
-    pos: Int,
-    size: Int,
-    mostCommon: Boolean = true
-):Int {
-    var values1 = values
-    var pos1 = pos
-    while (values1.size > 1) {
-        var newValues: MutableList<CharArray> = arrayListOf()
-        for (value in values1)
-            if (mostCommon && (diffs[pos1] >= 0) != (value[pos1] == '1') || !mostCommon && (diffs[pos1] >= 0) == (value[pos1] == '1')) {
-                newValues.add(value)
-                if (pos1 < size - 1) {
-                    if (value[pos1 + 1] == '1')
-                        diffs[pos1 + 1]++
-                    else
-                        diffs[pos1 + 1]--
-                }
-            }
-        pos1++
-        values1 = newValues
-    }
-    var rating = 0
-    if (values1.size == 1) {
-        for (pos in 0..size - 1)
-            if (values1[0][pos] == '1') {
-                rating = rating * 2 + 1
-            } else {
-                rating = rating * 2
-            }
-    }
-    return rating
+private fun getMostCommon(
+    values: List<CharArray>,
+    position: Int
+): Char {
+    var diff = 0
+    for (value in values)
+        if (value[position] == '1')
+            diff++
+        else
+            diff--
+    if (diff >= 0)
+        return '1'
+    else
+        return '0'
 }
+
+private fun selectValues(
+    values: List<CharArray>,
+    position: Int,
+    key: Char
+): List<CharArray> {
+    val newValues: MutableList<CharArray> = arrayListOf()
+    for (value in values)
+        if (value[position] == key)
+            newValues.add(value)
+    return newValues
+}
+
+private fun determineRating(
+    initialValues: List<CharArray>,
+    mostCommon: Boolean
+): CharArray {
+    var position = 0
+    var values = initialValues
+    while (values.size > 1) {
+        val common = getMostCommon(values, position)
+        if (mostCommon)
+            values = selectValues(values, position, common)
+        else
+            if (common == '1')
+                values = selectValues(values, position, '0')
+            else
+                values = selectValues(values, position, '1')
+        position++
+    }
+    return values[0]
+}
+
+private fun decode(
+    code: CharArray
+): Int {
+    return Integer.parseInt(String(code), 2)
+}
+
+/*
+val myValues: MutableList<CharArray> = arrayListOf()
+myValues.add("00100".toCharArray())
+myValues.add("11110".toCharArray())
+myValues.add("10110".toCharArray())
+myValues.add("10111".toCharArray())
+myValues.add("10101".toCharArray())
+myValues.add("01111".toCharArray())
+myValues.add("00111".toCharArray())
+myValues.add("11100".toCharArray())
+myValues.add("10000".toCharArray())
+myValues.add("11001".toCharArray())
+myValues.add("00010".toCharArray())
+myValues.add("01010".toCharArray())
+*/
