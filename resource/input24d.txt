@@ -1,0 +1,15 @@
+se z%26-alpha==-12 entao z=z*26+(alpha+4)
+se z%26-alpha==-11 entao z=z*26+(alpha+11)
+se z%26-alpha==-13 entao z=z*26+(alpha+5)
+se z%26-alpha==-11 entao z=z*26+(alpha+11)
+se z%26-alpha<>-14 entao z=z/26
+se z%26-alpha==10 entao z=z*26+(alpha+7)
+se z%26-alpha<>-11 entao z=z/26
+se z%26-alpha<>9 entao z=z/26
+se z%26-alpha==3 entao z=z*26+(alpha+6)
+se z%26-alpha<>-13 entao z=z/26
+se z%26-alpha<>5 entao z=z/26
+se z%26-alpha<>10 entao z=z/26
+se z%26-alpha<>4 entao z=z/26
+se z%26-alpha==5 entao z=z*26+(alpha+14)
+
